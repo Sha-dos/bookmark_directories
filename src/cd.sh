@@ -1,2 +1,3 @@
 #!/bin/zsh
-cd "$1"
+output=$(mrk $1)
+cd $output
