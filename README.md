@@ -8,5 +8,7 @@ bash
 ```
 Usage
 ```
-mrk {Name to save/load directory}
+mrk [argument]
+    Name to save/load directory
+    l: List all saved directories
 ```
