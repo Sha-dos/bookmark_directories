@@ -33,6 +33,7 @@ fn main() {
             output=$(bookmark_directories $1 $2)
             if [[ $output == cd* ]]
             then
+                cd ~/
                 eval $output
             else
                 echo $output
