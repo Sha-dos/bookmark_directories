@@ -1,6 +1,6 @@
 [package]
 name = "bookmark_directories"
-version = "0.0.6"
+version = "0.0.7"
 edition = "2021"
 author = "Sha-dos"
 repository = "https://github.com/Sha-dos/bookmark_directories"
