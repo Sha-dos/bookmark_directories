@@ -106,12 +106,8 @@ fn main() {
 
             let name = format!("{}{}", &args[2], ",");
 
-            println!("Name: {}, Dir: {}", &name, &directory);
-
             contents = contents.replace(&name, "");
             contents = contents.replace(&directory, "");
-
-            println!("contents: {}", contents);
 
             std::fs::remove_file(&path);
 
