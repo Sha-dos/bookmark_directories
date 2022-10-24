@@ -1,5 +1,5 @@
 # Bookmark Directories
-## Currently only works if using bash
+## Only works with zsh
 Install
 ```
 cargo install bookmark_directories

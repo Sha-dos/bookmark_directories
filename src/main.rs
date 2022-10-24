@@ -36,12 +36,12 @@ fn main() {
 
             file.write(data.as_bytes());
 
-            let bashrc_path = format!("{}{}", env::home_dir().unwrap().to_str().unwrap(), "/.bashrc");
+            let zshrc_path = format!("{}{}", env::home_dir().unwrap().to_str().unwrap(), "/.zshrc");
 
             let mut file = OpenOptions::new()
             .write(true)
             .append(true)
-            .open(bashrc_path)
+            .open(zshrc_path)
             .unwrap();
 
             file.write(br#"alias mrk=". ~/cd.sh""#);
