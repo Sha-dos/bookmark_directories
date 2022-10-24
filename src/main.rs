@@ -35,7 +35,7 @@ fn main() {
             then
                 eval $output
             else
-            echo $output
+                echo $output
             fi"
             );
 
