@@ -155,10 +155,11 @@ fn main() {
                 .open(&saved_path)
                 .unwrap();
 
-                let data = format!("{},{}", &args[1], env::current_dir().unwrap().to_str().unwrap());
+                let mut data = format!("{},{}", &args[1], env::current_dir().unwrap().to_str().unwrap());
 
-                //file.write_all(data.as_bytes());
-                writeln!(file, "{}", data);
+                let split: Vec<&str> = data.split(",").collect();
+
+                writeln!(file, "{},{}", &split[0], &split[1].split_at(1).1);
             }
         }
     }
