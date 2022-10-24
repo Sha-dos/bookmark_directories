@@ -14,10 +14,10 @@ struct SavedDir {
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    if args.len() != 2 { eprintln!("Error: Expected 1 argument!"); }
-
     match &args[1].as_str() {
         &"init" => {
+            if args.len() != 2 { eprintln!("Error: Expected 1 argument!"); }
+
             let shell_path = format!("{}{}", env::home_dir().unwrap().to_str().unwrap(), "/cd.sh");
 
             if !Path::new(&shell_path).exists() {
@@ -59,6 +59,8 @@ fn main() {
         }
 
         &"l" => {
+            if args.len() != 2 { eprintln!("Error: Expected 1 argument!"); }
+
             let path = format!("{}{}", env::home_dir().unwrap().to_str().unwrap(), "/.bookmarked_dirs");
 
             let mut saved: Vec<SavedDir> = Vec::new();
@@ -72,6 +74,22 @@ fn main() {
 
             for saved_dir in saved {
                 println!("Name: {} Directory: {}", saved_dir.name, saved_dir.dir);
+            }
+        }
+
+        &"r" => {
+            if args.len() != 3 { eprintln!("Error: Expected 2 argument!s"); }
+
+            let path = format!("{}{}", env::home_dir().unwrap().to_str().unwrap(), "/.bookmarked_dirs");
+
+            let mut saved: Vec<SavedDir> = Vec::new();
+
+            let lines = read_lines(path);
+
+            for line in lines.unwrap() {
+                if line.unwrap().contains(&args[2]) {
+
+                }
             }
         }
 

@@ -4,7 +4,7 @@ Install
 ```
 cargo install bookmark_directories
 bookmark_directories init
-bash
+zsh (restart shell)
 ```
 Usage
 ```
