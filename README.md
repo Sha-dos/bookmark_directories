@@ -11,4 +11,5 @@ Usage
 mrk [argument]
     Name to save/load directory
     l: List all saved directories
+    r: Remove saved directory
 ```

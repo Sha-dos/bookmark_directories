@@ -82,15 +82,48 @@ fn main() {
 
             let path = format!("{}{}", env::home_dir().unwrap().to_str().unwrap(), "/.bookmarked_dirs");
 
-            let mut saved: Vec<SavedDir> = Vec::new();
+            let mut contents = String::new();
 
-            let lines = read_lines(path);
+            let mut file = OpenOptions::new()
+                .write(true)
+                .read(true)
+                .append(false)
+                .open(&path)
+                .expect("Error: Failed to open file!");
+
+            file.read_to_string(&mut contents);
+
+            let lines = read_lines(&path);
+
+            let mut directory = String::new();
 
             for line in lines.unwrap() {
-                if line.unwrap().contains(&args[2]) {
-
+                if line.as_ref().unwrap().contains(&args[2]) {
+                    let seperate: Vec<&str> = line.as_ref().unwrap().split(",").collect();
+                    directory = seperate[1].to_string();
                 }
             }
+
+            let name = format!("{}{}", &args[2], ",");
+
+            println!("Name: {}, Dir: {}", &name, &directory);
+
+            contents = contents.replace(&name, "");
+            contents = contents.replace(&directory, "");
+
+            println!("contents: {}", contents);
+
+            std::fs::remove_file(&path);
+
+            let mut file = OpenOptions::new()
+                .write(true)
+                .read(true)
+                .append(false)
+                .create(true)
+                .open(&path)
+                .expect("Error: Failed to create file!");
+
+            file.write_all(&contents.as_bytes());
         }
 
         _ => {
