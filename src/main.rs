@@ -30,7 +30,7 @@ fn main() {
             .unwrap();
 
             let data = String::from("#!/bin/bash
-            output=$(bookmark_directories $1)
+            output=$(bookmark_directories $1 $2)
             if [[ $output == cd* ]]
             then
                 eval $output
