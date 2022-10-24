@@ -119,7 +119,7 @@ fn main() {
                 .open(&path)
                 .expect("Error: Failed to create file!");
 
-            file.write_all(&contents.as_bytes());
+            file.write_all(&contents.trim().as_bytes());
         }
 
         _ => {
