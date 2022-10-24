@@ -31,7 +31,12 @@ fn main() {
 
             let data = String::from("#!/bin/bash
             output=$(bookmark_directories $1)
-            cd $output"
+            if [[ $output == cd* ]]
+            then
+                eval $output
+            else
+            echo $output
+            fi"
             );
 
             file.write(data.as_bytes());
@@ -44,7 +49,30 @@ fn main() {
             .open(zshrc_path)
             .unwrap();
 
-            file.write(br#"alias mrk=". ~/cd.sh""#);
+            let mut contents = String::new();
+
+            file.read_to_string(&mut contents);
+
+            if !contents.contains(r#"alias mrk=". ~/cd.sh""#) {
+                file.write(br#"alias mrk=". ~/cd.sh""#);
+            }
+        }
+
+        &"l" => {
+            let path = format!("{}{}", env::home_dir().unwrap().to_str().unwrap(), "/.bookmarked_dirs");
+
+            let mut saved: Vec<SavedDir> = Vec::new();
+
+            let lines = read_lines(path)
+                .expect("Error: Failed to open file. Have you set up your shell? {bookmark_directories init}");
+
+            for line in lines {
+                saved.push(parse(&mut line.unwrap()));
+            }
+
+            for saved_dir in saved {
+                println!("Name: {} Directory: {}", saved_dir.name, saved_dir.dir);
+            }
         }
 
         _ => {
@@ -101,7 +129,7 @@ fn parse(data: &mut String) -> SavedDir {
 }
 
 fn goto_dir(path: String) {
-    println!("{}", &path);
+    println!("cd {}", &path);
 }
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
