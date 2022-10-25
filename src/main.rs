@@ -12,7 +12,7 @@ struct SavedDir {
 }
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let mut args: Vec<String> = env::args().collect();
 
     match &args[1].as_str() {
         &"init" => {
@@ -153,11 +153,6 @@ fn main() {
                 .unwrap();
 
                 let mut data = format!("{},{}", &args[1], env::current_dir().unwrap().into_os_string().into_string().unwrap());
-                let home = env::home_dir().unwrap();
-
-                if !data.contains(&home.to_str().unwrap()) {
-                    data = format!("{}{}", "~", &data);
-                }
 
                 writeln!(file, "{}", &data);
             }
