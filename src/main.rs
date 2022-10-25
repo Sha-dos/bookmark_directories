@@ -137,11 +137,8 @@ fn main() {
                 let mut saved_dirs: Vec<SavedDir> = Vec::new();
 
                 for line in lines {
-                    //println!("Data: {}", &line.unwrap());
                     saved_dirs.push(parse(&mut line.unwrap()));
                 }
-
-                // println!("Dirs: {:?}", saved_dirs[0]);
 
                 for saved_dir in saved_dirs {
                     if saved_dir.name == args[1] {
@@ -155,11 +152,14 @@ fn main() {
                 .open(&saved_path)
                 .unwrap();
 
-                let mut data = format!("{},{}", &args[1], env::current_dir().unwrap().to_str().unwrap());
+                let mut data = format!("{},{}", &args[1], env::current_dir().unwrap().into_os_string().into_string().unwrap());
+                let home = env::home_dir().unwrap();
 
-                let split: Vec<&str> = data.split(",").collect();
+                if !data.contains(&home.to_str().unwrap()) {
+                    data = format!("{}{}", "~", &data);
+                }
 
-                writeln!(file, "{},{}", &split[0], &split[1].split_at(1).1);
+                writeln!(file, "{}", &data);
             }
         }
     }
